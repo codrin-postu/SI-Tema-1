@@ -54,10 +54,6 @@ def client():
     node_b_socket.close()
     keymanager_socket.close()
 
-    cipher_file = open("cipher_file.txt", "w")
-    cipher_file.write(ciphertext.decode())
-    cipher_file.close()
-
 
 if __name__ == "__main__":
     client()
