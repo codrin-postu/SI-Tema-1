@@ -32,19 +32,19 @@ def client():
 
     key_1 = aes.decrypt(key_2)
 
+    message = node_b_socket.recv(1024).decode()
+    if message != 'READY':
+        exit(0)
+
     ciphertext = bytearray()
 
     while curr_block < blocks_count:
         if enc_mode == 'ECB':
             aes = AES.new(key_1, AES.MODE_ECB)
-            text_curr_block = provided_text[AES.block_size * curr_block:AES.block_size * (curr_block + 1)]
+            text_curr_block = provided_text[16 * curr_block:16 * (curr_block + 1)]
             cipher_curr_block = aes.encrypt(text_curr_block)
-            print(cipher_curr_block)
 
-            aes = AES.new(key_1, AES.MODE_ECB)
-            print(aes.decrypt(cipher_curr_block))
             node_b_socket.sendall(cipher_curr_block)
-
             ciphertext.extend(cipher_curr_block)
         elif enc_mode == 'CFB':
             print("Not yet done big boye!")
@@ -53,7 +53,8 @@ def client():
 
     node_b_socket.close()
     keymanager_socket.close()
-
+    print('Contents of the file have been delivered!')
+    # print(ciphertext)
 
 if __name__ == "__main__":
     client()
