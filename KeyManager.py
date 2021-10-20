@@ -33,7 +33,15 @@ def server():
                     enc_key_2 = aes.encrypt(key_2)
                     conn.sendall(enc_key_2)
                 if data == 'CFB':
-                    print('Not yet done!')
+                    key_2 = get_random_bytes(16)
+                    print("Generated key: ", key_2, '\nEncrypting key!')
+                    enc_key_2 = aes.encrypt(key_2)
+                    conn.sendall(enc_key_2)
+
+                    # iv = get_random_bytes(16)
+                    # print("Generated initialization array: ", iv, '\nEncrypting array!')
+                    # enc_iv = aes.encrypt(iv)
+                    # conn.sendall(enc_iv)
 
             conn.close()
 
