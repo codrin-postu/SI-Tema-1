@@ -9,13 +9,13 @@ def xor(ba1, ba2):
 
 
 def client():
-    block_size = 16                               # 16 / 32 bytes
+    block_size = 16  # 16 / 32 bytes
 
     key_1 = b'1234567890abcdef'
-    iv = b'I ammm grooot!!!'                      # For block of 16 bytes
+    iv = b'I ammm grooot!!!'  # For block of 16 bytes
 
-    host = socket.gethostname()                     # We will connect to NodeB server and
-    port_km = 25341                                 # the KeyManager server for communication
+    host = socket.gethostname()  # We will connect to NodeB server and
+    port_km = 25341  # the KeyManager server for communication
     port_b = 25342
     keymanager_socket = socket.socket()
     node_b_socket = socket.socket()
@@ -24,10 +24,7 @@ def client():
 
     file_object = open("original_file.txt", "r")
     provided_text = file_object.read().encode()
-    print(len(provided_text))
-    print(len(provided_text) % block_size)
     provided_text = provided_text.ljust(len(provided_text) + (len(provided_text) % block_size))
-    print(len(provided_text))
     file_object.close()
 
     blocks_count = int(len(provided_text) / block_size)
