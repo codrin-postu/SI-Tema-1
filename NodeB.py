@@ -13,9 +13,11 @@ def server():
     HOST = socket.gethostname()
     PORT = 25342
 
+    block_size = 16
+
     # key = get_random_bytes(AES.block_size)
     key_1 = b'1234567890abcdef'
-    iv = b'I ammm grooot!!!'
+    iv = b'Iaammmagrooot012'                    # For block of 16 bytes
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
@@ -34,17 +36,18 @@ def server():
             # iv = aes.decrypt(enc_iv)
 
             print('Received encryption mode: ', enc_mode)
-            print('Will take each block of 16 bytes and decrypt it')
+            print('Will take each block of', block_size, 'bytes and decrypt it')
+            print('._______________________________________________')
 
             conn.sendall('READY'.encode())
             decrypted_text = bytearray()
 
             while True:
-                data = conn.recv(16)
-                print(data)
-
+                data = conn.recv(block_size)
                 if data == b'':
                     break
+
+                print("|   ", data)
 
                 aes = AES.new(key_2, AES.MODE_ECB)
 
@@ -59,6 +62,8 @@ def server():
                 decrypted_text.extend(decrypted_curr_block)
 
             conn.close()
+            print('|_______________________________________________')
+
             decrypted_file = open("decrypted_file.txt", "w")
             decrypted_file.write(decrypted_text.decode())
             print("Decrypted text has been saved in file!")

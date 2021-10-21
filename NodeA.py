@@ -9,22 +9,28 @@ def xor(ba1, ba2):
 
 
 def client():
-    key_1 = b'1234567890abcdef'
-    iv = b'I ammm grooot!!!'
+    block_size = 16                               # 16 / 32 bytes
 
-    host = socket.gethostname()  # We will connect to NodeB server and
-    PORT_KM = 25341  # the KeyManager server for communication
-    PORT_B = 25342
+    key_1 = b'1234567890abcdef'
+    iv = b'I ammm grooot!!!'                      # For block of 16 bytes
+
+    host = socket.gethostname()                     # We will connect to NodeB server and
+    port_km = 25341                                 # the KeyManager server for communication
+    port_b = 25342
     keymanager_socket = socket.socket()
     node_b_socket = socket.socket()
-    keymanager_socket.connect((host, PORT_KM))
-    node_b_socket.connect((host, PORT_B))
+    keymanager_socket.connect((host, port_km))
+    node_b_socket.connect((host, port_b))
 
     file_object = open("original_file.txt", "r")
     provided_text = file_object.read().encode()
+    print(len(provided_text))
+    print(len(provided_text) % block_size)
+    provided_text = provided_text.ljust(len(provided_text) + (len(provided_text) % block_size))
+    print(len(provided_text))
     file_object.close()
 
-    blocks_count = int(len(provided_text) / AES.block_size)
+    blocks_count = int(len(provided_text) / block_size)
     curr_block = 0
 
     enc_mode = input("Encryption modes:\nECB\nCFB\nYour choice: ").upper()
@@ -51,7 +57,7 @@ def client():
 
     while curr_block < blocks_count:
         aes = AES.new(key_2, AES.MODE_ECB)
-        text_curr_block = provided_text[16 * curr_block:16 * (curr_block + 1)]
+        text_curr_block = provided_text[block_size * curr_block:block_size * (curr_block + 1)]
 
         if enc_mode == 'ECB':
             cipher_curr_block = aes.encrypt(text_curr_block)
