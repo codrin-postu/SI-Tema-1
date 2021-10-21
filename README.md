@@ -70,3 +70,7 @@ https://www.python.org/
 2. https://profs.info.uaic.ro/~liliana.cojocaru/
 3. https://www.programiz.com/python-programming/methods/built-in/bytearray
 4. https://www.dlitz.net/software/pycrypto/api/2.6/Crypto.Cipher.AES-module.html
+
+## Erori cunoscute
+
+1. Pentru a trimite textul complet, adaug folosind ljust spatii la finalul acestuia. Textul decodat va ramane cu spatiile de la final.
