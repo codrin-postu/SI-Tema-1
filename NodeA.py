@@ -12,7 +12,7 @@ def client():
     block_size = 16  # 16 / 32 bytes
 
     key_1 = b'1234567890abcdef'
-    iv = b'I ammm grooot!!!'  # For block of 16 bytes
+    iv = b'Iaammmagrooot012'
 
     host = socket.gethostname()  # We will connect to NodeB server and
     port_km = 25341  # the KeyManager server for communication

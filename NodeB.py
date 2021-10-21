@@ -16,7 +16,7 @@ def server():
 
     # key = get_random_bytes(AES.block_size)
     key_1 = b'1234567890abcdef'
-    iv = b'Iaammmagrooot012'                    # For block of 16 bytes
+    iv = b'Iaammmagrooot012'
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
